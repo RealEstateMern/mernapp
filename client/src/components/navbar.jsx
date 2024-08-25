@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { Link } from 'react-router-dom';
 import "./navbar.scss"
 
-function navbar() {
-    const [open,setOpen]= useState(false)
+function Navbar() {
+    const [open,setOpen]= useState(false);
+
+    const user = true;
+
     return (
         <nav>
             <div className='left'>
@@ -19,8 +23,21 @@ function navbar() {
 
             </div>
             <div className='right'>
-                <a href='/'>Sign in</a>
-                <a href='/' className='register'>Sign Up</a>
+                {user?(
+                    <div className='user'>
+                        <img src='https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg'/>
+                        <span>John Doe</span>
+                        <Link t0="/profile" className='profile'>
+                        <div className="notification">3</div>
+                        <span>Profile</span>
+                        </Link>
+                    </div>
+                    ): (
+                        <><a href='/'>Sign in</a>
+                            <a href='/' className='register'>Sign Up</a>
+                        </>
+                    )
+                }
                 <div className='menuicon'>
                     <img src='/menu.png' alt='' onClick={()=>setOpen((prev)=>!prev)}/>
                 </div>
@@ -37,4 +54,4 @@ function navbar() {
   )
 }
 
-export default navbar
+export default Navbar

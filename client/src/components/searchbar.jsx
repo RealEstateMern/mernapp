@@ -3,7 +3,7 @@ import './searchbar.scss'
 
 const types =["buy","rent"];
 
-function searchbar() {
+function Searchbar() {
     const [query,setQuery] = useState(
         {
             type:"buy",
@@ -45,4 +45,4 @@ function searchbar() {
   )
 }
 
-export default searchbar
+export default Searchbar
