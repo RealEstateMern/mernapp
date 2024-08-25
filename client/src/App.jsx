@@ -6,7 +6,7 @@ import ProfilePage from "./routes/profilePage/profilePage"
 import { createBrowserRouter,RouterProvider, } from "react-router-dom"
 import Layout from './routes/layout/layout'
 
-// anji test
+
 function App() {
   const router= createBrowserRouter([
     {
