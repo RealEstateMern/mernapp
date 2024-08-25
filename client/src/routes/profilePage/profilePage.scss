@@ -13,7 +13,7 @@
     .details{
         flex: 3;
         overflow-y: scroll;
-        padding: 50px;
+        padding: 10px 50px 50px 50px;
 
         @include md{
             flex: none;
