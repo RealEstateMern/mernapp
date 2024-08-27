@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "console-ninja node --watch app.js"
+    "hkd": "console-ninja node --watch app.js",
+    "start": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
@@ -26,3 +27,5 @@
     "prisma": "^5.18.0"
   }
 }
+
+
