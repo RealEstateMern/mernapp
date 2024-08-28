@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "../homePage/home.scss";
-import SearchBar from "../../components/searchbar";
+import SearchBar from "../../components/searchbar/searchbar";
 import { AuthContext } from "../../context/AuthContext";
 
 function home() {
