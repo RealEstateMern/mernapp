@@ -2,7 +2,6 @@ import prisma from "../lib/prisma.js";
 
 export const getChats = async (req, res) => {
   const tokenUserId = req.userID;
-
   try {
     const chats = await prisma.chat.findMany({
       where: {
@@ -11,6 +10,23 @@ export const getChats = async (req, res) => {
         },
       },
     });
+
+    for (const chat of chats) {
+      const receiverId = chat.userIds.find((id) => id != tokenUserId);
+
+      const receiver = await prisma.user.findUnique({
+        where: {
+          id: receiverId,
+        },
+        select: {
+          id: true,
+          username: true,
+          avatar: true,
+        },
+      });
+
+      chat.receiver = receiver;
+    }
     res.status(200).json(chats);
   } catch (err) {
     console.log(err);

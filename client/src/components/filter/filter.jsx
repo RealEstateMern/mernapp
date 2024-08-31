@@ -11,7 +11,7 @@ function Filter() {
     city: searchParams.get("city") || "",
     property: searchParams.get("property") || "",
     minPrice: searchParams.get("minPrice") || 0,
-    maxPrice: searchParams.get("maxPrice") || 100000,
+    maxPrice: searchParams.get("maxPrice") || 10000000,
     bedroom: searchParams.get("bedroom") || 0,
   });
 
@@ -34,12 +34,12 @@ function Filter() {
       </h1>
       <div className="top">
         <div className="item">
-          <label htmlFor="city">Location</label>
+          <label htmlFor="city">City</label>
           <input
             type="text"
             id="city"
             name="city"
-            placeholder="City Location"
+            placeholder="City"
             onChange={handleChange}
             defaultValue={query.city}
           />
@@ -55,7 +55,7 @@ function Filter() {
             onChange={handleChange}
             defaultValue={query.type}
           >
-            <option value="any">any</option>
+            <option value="">Any</option>
             <option value="buy">Buy</option>
             <option value="rent">Rent</option>
           </select>
@@ -69,7 +69,7 @@ function Filter() {
             onChange={handleChange}
             defaultValue={query.property}
           >
-            <option value="any">any</option>
+            <option value="">Any</option>
             <option value="apartment">Apartment</option>
             <option value="house">House</option>
             <option value="condo">Condo</option>
@@ -82,7 +82,7 @@ function Filter() {
           <input
             type="number"
             id="minPrice"
-            name="minPrize"
+            name="minPrice"
             placeholder="any"
             onChange={handleChange}
             defaultValue={query.minPrice}
@@ -94,7 +94,7 @@ function Filter() {
           <input
             type="number"
             id="maxPrice"
-            name="maxPrize"
+            name="maxPrice"
             placeholder="any"
             onChange={handleChange}
             defaultValue={query.maxPrice}
