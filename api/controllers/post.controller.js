@@ -15,6 +15,9 @@ export const getPosts = async (req, res) => {
           lte: parseInt(query.maxPrice) || 10000000,
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     // setTimeout(() => {
@@ -106,7 +109,7 @@ export const updatePost = async (req, res) => {
 
 export const deletePost = async (req, res) => {
   const id = req.params.id;
-  const tokenUserId = req.UserID;
+  const tokenUserId = req.userID;
 
   try {
     const post = await prisma.post.findUnique({ where: { id } });
@@ -116,6 +119,14 @@ export const deletePost = async (req, res) => {
         .status(403)
         .json({ message: "You do not have permission to delete this" });
     }
+
+    await prisma.postDetail.delete({
+      where: { postId: id },
+    });
+
+    await prisma.savedPost.delete({
+      where: { postId: id },
+    });
 
     await prisma.post.delete({
       where: { id },

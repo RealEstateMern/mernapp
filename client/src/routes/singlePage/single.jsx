@@ -28,6 +28,43 @@ function single() {
       console.log(err);
     }
   };
+
+  const handleChat = async () => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+    try {
+      await apiRequest.post("/chats/", { receiverId: post.userId });
+      navigate(`/profile`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleUpdate = async () => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+    try {
+      // await apiRequest.delete("/posts/" + post.id);
+      navigate(`/profile`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+    try {
+      await apiRequest.delete("/posts/" + post.id);
+      navigate(`/profile`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="singlePage">
       <div className="details">
@@ -44,7 +81,7 @@ function single() {
                 <div className="price">$ {post.price}</div>
               </div>
               <div className="user">
-                <img src={post.user.avatar} alt="" />
+                <img src={post.user.avatar || "/noavatar.jpg"} alt="" />
                 <span>{post.user.username}</span>
               </div>
             </div>
@@ -59,6 +96,24 @@ function single() {
       </div>
       <div className="features">
         <div className="wrapper">
+          {currentUser.id == post.userId ? (
+            <>
+              <p className="title">Action</p>
+              <div className="buttons">
+                <button onClick={handleUpdate}>Update Post</button>
+                <button
+                  onClick={handleDelete}
+                  style={{
+                    backgroundColor: "#ff6a6a",
+                  }}
+                >
+                  Delete Post
+                </button>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
           <p className="title">General</p>
           <div className="listVertical">
             <div className="feature">
@@ -153,7 +208,7 @@ function single() {
             <Map items={[post]} />
           </div>
           <div className="buttons">
-            <button>
+            <button onClick={handleChat}>
               <img src="/chat.png" alt="" />
               Send a Message
             </button>
@@ -163,7 +218,7 @@ function single() {
                 backgroundColor: saved ? "#fece51" : "white",
               }}
             >
-              <img src="/chat.png" alt="" />
+              <img src="/save.png" alt="" />
               {saved ? "Place saved" : "Save the Place"}
             </button>
           </div>

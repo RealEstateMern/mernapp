@@ -30,6 +30,7 @@ export const addMessage = async (req, res) => {
       data: {
         seenBy: [tokenUserID],
         lastMessage: text,
+        // updatedAt: new Date(),
       },
     });
 

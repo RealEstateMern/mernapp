@@ -5,6 +5,8 @@ import Card from "../card/card";
 function List({ posts }) {
   return (
     <div className="List">
+      {posts.length == 0 && <h4>No posts yet</h4>}
+
       {posts.map((item) => (
         <Card key={item.id} item={item} />
       ))}

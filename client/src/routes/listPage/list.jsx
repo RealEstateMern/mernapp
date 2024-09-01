@@ -8,7 +8,7 @@ import { Await, useLoaderData } from "react-router-dom";
 
 function list() {
   const data = useLoaderData();
-  console.log(data);
+
   return (
     <div className="listPage">
       <div className="listContainer">

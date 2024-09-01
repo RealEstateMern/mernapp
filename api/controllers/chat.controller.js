@@ -9,6 +9,9 @@ export const getChats = async (req, res) => {
           hasSome: [tokenUserId],
         },
       },
+      orderBy: {
+        updatedAt: "desc",
+      },
     });
 
     for (const chat of chats) {
@@ -74,12 +77,28 @@ export const getChat = async (req, res) => {
 export const addChat = async (req, res) => {
   const tokenUserID = req.userID;
   try {
-    const newChat = await prisma.chat.create({
-      data: {
-        userIds: [tokenUserID, req.body.receiverId],
+    const receiverId = req.body.receiverId;
+    // Sort the IDs to ensure consistent order
+    const userIds = [tokenUserID, receiverId].sort();
+
+    const existingChats = await prisma.chat.findMany({
+      where: {
+        userIds: {
+          equals: userIds,
+        },
       },
     });
-    res.status(200).json(newChat);
+
+    if (existingChats.length > 0) {
+      res.status(200).json(existingChats[0]);
+    } else {
+      const newChat = await prisma.chat.create({
+        data: {
+          userIds,
+        },
+      });
+      res.status(200).json(newChat);
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to add chat" });
@@ -102,9 +121,36 @@ export const readChat = async (req, res) => {
         },
       },
     });
-    res.status(200).json(users);
+    res.status(200).json(chat);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to read chat" });
+  }
+};
+
+export const deleteChat = async (req, res) => {
+  const id = req.params.id;
+  const tokenUserID = req.userID;
+  try {
+    const chat = await prisma.chat.findUnique({
+      where: {
+        id,
+        userIds: {
+          hasSome: [tokenUserID],
+        },
+      },
+    });
+
+    await prisma.message.deleteMany({
+      where: { chatId: id },
+    });
+
+    await prisma.chat.delete({
+      where: { id },
+    });
+    res.status(200).json({ message: "Chat deleted" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to delete chat" });
   }
 };

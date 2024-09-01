@@ -8,7 +8,6 @@ import { AuthContext } from "../../context/AuthContext";
 
 function profilePage() {
   const data = useLoaderData();
-  console.log(data);
 
   const { currentUser, updateUser } = useContext(AuthContext);
 
@@ -23,6 +22,7 @@ function profilePage() {
       console.log(err);
     }
   };
+
   return (
     currentUser && (
       <div className="profilePage">
@@ -49,6 +49,10 @@ function profilePage() {
             </div>
             <div className="title">
               <h1>My List</h1>
+
+              {/* {data.postResponse.data.userPosts.length == 0 && (
+                <h4>No posts yet</h4>
+              )} */}
               <Link to="/add">
                 <button>Create New Post</button>
               </Link>

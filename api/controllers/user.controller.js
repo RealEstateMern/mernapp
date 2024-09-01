@@ -101,7 +101,7 @@ export const savePost = async (req, res) => {
           id: savedPost.id,
         },
       });
-      res.status(200).json({ message: "UPost removed from saved user list" });
+      res.status(200).json({ message: "Post removed from saved user list" });
     } else {
       await prisma.savedPost.create({
         data: {
@@ -118,7 +118,7 @@ export const savePost = async (req, res) => {
 };
 
 export const profilePosts = async (req, res) => {
-  const tokenUserId = req.params.userID;
+  const tokenUserId = req.userID;
   try {
     const userPosts = await prisma.post.findMany({
       where: { userId: tokenUserId },
