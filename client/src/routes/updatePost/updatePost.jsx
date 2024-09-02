@@ -9,10 +9,16 @@ import { AuthContext } from "../../context/AuthContext";
 
 function UpdatePostPage() {
   const post = useLoaderData();
+
+  const { postDetail, user, ...rest } = post;
   console.log(post);
   const [value, setValue] = useState(post.postDetail.desc);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(post.images);
   const [error, setError] = useState("");
+
+  const [query, setQuery] = useState(rest);
+  const [detail, setDetail] = useState(postDetail);
+  console.log(detail);
 
   const { currentUser } = useContext(AuthContext);
 
@@ -26,11 +32,12 @@ function UpdatePostPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData(e.target);
     const inputs = Object.fromEntries(formData);
 
     try {
-      const res = await apiRequest.put("/posts/" + post.id, {
+      const res = await apiRequest.put("/posts/" + query.id, {
         postData: {
           title: inputs.title,
           price: parseInt(inputs.price),
@@ -56,7 +63,9 @@ function UpdatePostPage() {
         },
         userId: currentUser.id,
       });
-      navigate("/" + res.data.id);
+
+      // console.log(res);
+      navigate("/" + res.data.updatedPost.id);
     } catch (err) {
       console.log(err);
       setError(error);
@@ -65,6 +74,13 @@ function UpdatePostPage() {
 
   const handleChange = (e) => {
     setQuery({
+      ...post,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleDetailChange = (e) => {
+    setDetail({
       ...post,
       [e.target.name]: e.target.value,
     });
@@ -82,7 +98,7 @@ function UpdatePostPage() {
                 id="title"
                 name="title"
                 type="text"
-                value={post.title}
+                value={query.title}
                 onChange={handleChange}
               />
             </div>
@@ -92,7 +108,7 @@ function UpdatePostPage() {
                 id="price"
                 name="price"
                 type="number"
-                value={post.price}
+                value={query.price}
                 onChange={handleChange}
               />
             </div>
@@ -102,7 +118,7 @@ function UpdatePostPage() {
                 id="address"
                 name="address"
                 type="text"
-                value={post.address}
+                value={query.address}
                 onChange={handleChange}
               />
             </div>
@@ -116,7 +132,7 @@ function UpdatePostPage() {
                 id="city"
                 name="city"
                 type="text"
-                value={post.city}
+                value={query.city}
                 onChange={handleChange}
               />
             </div>
@@ -127,7 +143,7 @@ function UpdatePostPage() {
                 id="bedroom"
                 name="bedroom"
                 type="number"
-                value={post.bedroom}
+                value={query.bedroom}
                 onChange={handleChange}
               />
             </div>
@@ -138,7 +154,7 @@ function UpdatePostPage() {
                 id="bathroom"
                 name="bathroom"
                 type="number"
-                value={post.bathroom}
+                value={query.bathroom}
                 onChange={handleChange}
               />
             </div>
@@ -148,7 +164,7 @@ function UpdatePostPage() {
                 id="latitude"
                 name="latitude"
                 type="text"
-                value={post.latitude}
+                value={query.latitude}
                 onChange={handleChange}
               />
             </div>
@@ -158,7 +174,7 @@ function UpdatePostPage() {
                 id="longitude"
                 name="longitude"
                 type="text"
-                value={post.longitude}
+                value={query.longitude}
                 onChange={handleChange}
               />
             </div>
@@ -203,8 +219,8 @@ function UpdatePostPage() {
                 name="income"
                 type="text"
                 placeholder="Income Policy"
-                value={post.postDetail.income}
-                onChange={handleChange}
+                value={detail.income}
+                onChange={handleDetailChange}
               />
             </div>
             <div className="item">
@@ -214,8 +230,8 @@ function UpdatePostPage() {
                 id="size"
                 name="size"
                 type="number"
-                value={post.postDetail.size}
-                onChange={handleChange}
+                value={detail.size}
+                onChange={handleDetailChange}
               />
             </div>
             <div className="item">
@@ -225,8 +241,8 @@ function UpdatePostPage() {
                 id="school"
                 name="school"
                 type="number"
-                value={post.postDetail.school}
-                onChange={handleChange}
+                value={detail.school}
+                onChange={handleDetailChange}
               />
             </div>
             <div className="item">
@@ -236,8 +252,8 @@ function UpdatePostPage() {
                 id="bus"
                 name="bus"
                 type="number"
-                value={post.postDetail.bus}
-                onChange={handleChange}
+                value={detail.bus}
+                onChange={handleDetailChange}
               />
             </div>
             <div className="item">
@@ -247,19 +263,17 @@ function UpdatePostPage() {
                 id="restaurant"
                 name="restaurant"
                 type="number"
-                value={post.postDetail.restaurant}
-                onChange={handleChange}
+                value={detail.restaurant}
+                onChange={handleDetailChange}
               />
             </div>
-            <button className="sendButton">Add</button>
+            <button className="sendButton">Update</button>
             {error && <span>error</span>}
           </form>
         </div>
       </div>
       <div className="sideContainer">
-        {images.map((image, index) => (
-          <img src={image} key={index} alt="" />
-        ))}
+        <h4>Upload new images to replace.</h4>
         <UploadWidget
           uwConfig={{
             multiple: true,
@@ -269,6 +283,9 @@ function UpdatePostPage() {
           }}
           setState={setImages}
         />
+        {images.map((image, index) => (
+          <img src={image} key={index} alt="" />
+        ))}
       </div>
     </div>
   );
