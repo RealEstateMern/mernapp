@@ -13,6 +13,7 @@ import {
   profilePageLoader,
   singlePageLoader,
 } from "./lib/loaders";
+import UpdatePostPage from "./routes/updatePost/updatePost";
 
 function App() {
   const router = createBrowserRouter([
@@ -60,6 +61,11 @@ function App() {
         {
           path: "/add",
           element: <NewPostPage />,
+        },
+        {
+          path: "/update/:id",
+          element: <UpdatePostPage />,
+          loader: singlePageLoader,
         },
       ],
     },

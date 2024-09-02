@@ -49,10 +49,6 @@ function profilePage() {
             </div>
             <div className="title">
               <h1>My List</h1>
-
-              {/* {data.postResponse.data.userPosts.length == 0 && (
-                <h4>No posts yet</h4>
-              )} */}
               <Link to="/add">
                 <button>Create New Post</button>
               </Link>

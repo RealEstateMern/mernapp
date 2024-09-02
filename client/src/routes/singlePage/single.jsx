@@ -3,7 +3,7 @@ import "../singlePage/single.scss";
 import Slider from "../../components/slider/slider.jsx";
 import Map from "../../components/map/map.jsx";
 import { singlePostData, userData } from "../../lib/dummydata";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -35,18 +35,6 @@ function single() {
     }
     try {
       await apiRequest.post("/chats/", { receiverId: post.userId });
-      navigate(`/profile`);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleUpdate = async () => {
-    if (!currentUser) {
-      navigate("/login");
-    }
-    try {
-      // await apiRequest.delete("/posts/" + post.id);
       navigate(`/profile`);
     } catch (err) {
       console.log(err);
@@ -100,7 +88,9 @@ function single() {
             <>
               <p className="title">Action</p>
               <div className="buttons">
-                <button onClick={handleUpdate}>Update Post</button>
+                <button>
+                  <Link to={`/update/${post.id}`}>Update Post</Link>
+                </button>
                 <button
                   onClick={handleDelete}
                   style={{
