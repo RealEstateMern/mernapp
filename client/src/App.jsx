@@ -8,6 +8,8 @@ import Register from "./routes/register/register";
 import Login from "./routes/login/login";
 import ProfileUpdatePage from "./routes/profileUpdate/profileUpdatePage";
 import NewPostPage from "./routes/newPostPage/newPostPage";
+import AboutPage from "./routes/aboutPage/about"
+import ContactPage from "./routes/contactPage/contact"
 import {
   listPageLoader,
   profilePageLoader,
@@ -43,6 +45,14 @@ function App() {
           path: "/login",
           element: <Login />,
         },
+        {
+          path: "/about",
+          element: <AboutPage />
+        },
+        {
+          path: "/contact",
+          element: <ContactPage />
+        }
       ],
     },
     {
