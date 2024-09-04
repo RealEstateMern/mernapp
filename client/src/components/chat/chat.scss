@@ -50,6 +50,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+     
 
       .user {
         display: flex;
@@ -63,17 +64,27 @@
           object-fit: cover;
         }
       }
+      .topRight{
+        display: flex;
+        gap: 20px;
+        
 
-      .trash {
-        // margin-right: auto;
-        // background-color: inherit;
-        border: none;
-        // padding-left: 20px;
-        cursor: pointer;
+        .trash {
+          display: flex;
+          border: none;
+          align-items: center;
+          width: 25px;
+          height: 25px;
+          cursor: pointer;
+          
+        }
+        .close {
+          width: 25px;
+          height: 25px;
+          cursor: pointer;
+        }
       }
-      .close {
-        cursor: pointer;
-      }
+      
     }
     .center {
       height: 350px;
