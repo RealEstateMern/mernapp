@@ -46,6 +46,7 @@ function profilePage() {
                 E-mail: <b>{currentUser.email}</b>
               </span>
               <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogout} className="delete">Delete Account</button>
             </div>
             <div className="title">
               <h1>My List</h1>
